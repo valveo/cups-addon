@@ -7,6 +7,9 @@
   DCP-7030/7055. These printers understand neither PCL nor PostScript, so the
   bundled Gutenprint drivers left them silent. The models now appear in the
   add-printer list as "Brother <model>, using Owl-Maintain/brlaser v6.2.8".
+- Fork metadata: repository and add-on point to valveo/cups-addon and the
+  add-on is named "CUPS Print Server (brlaser)" so it is distinguishable
+  from the upstream add-on in the Home Assistant store.
 
 ## [1.3.4] — 2026-10-21
 
