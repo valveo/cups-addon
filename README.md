@@ -1,12 +1,33 @@
 
 
-# Home Assistant CUPS Print Server App
+# Home Assistant CUPS Print Server App (brlaser fork)
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/arest/cups-addon)
-[![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg)](https://github.com/arest/cups-addon)
-[![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)](https://github.com/arest/cups-addon)
+[![Version](https://img.shields.io/badge/version-1.3.5-blue.svg)](https://github.com/valveo/cups-addon)
+[![Supports aarch64 Architecture](https://img.shields.io/badge/aarch64-yes-green.svg)](https://github.com/valveo/cups-addon)
+[![Supports amd64 Architecture](https://img.shields.io/badge/amd64-yes-green.svg)](https://github.com/valveo/cups-addon)
 
 This Home Assistant app provides a CUPS (Common Unix Printing System) print server, allowing you to manage and share printers over your local network. It's designed for Home Assistant users who want to integrate network printing capabilities directly into their smart home setup.
+
+> **About this fork**
+>
+> This is a fork of [arest/cups-addon](https://github.com/arest/cups-addon)
+> that adds support for Brother host-based (GDI) laser printers.
+> Everything else works exactly as in the upstream add-on.
+>
+> **What is changed compared to upstream:**
+>
+> | Change | Details |
+> | --- | --- |
+> | **brlaser driver added** | The open-source [brlaser](https://github.com/Owl-Maintain/brlaser) driver (v6.2.8, GPL-2.0) is compiled into the image from the vendored source in `cups/brlaser/`. It drives Brother lasers that understand neither PCL nor PostScript, such as the HL-2130, HL-2140, HL-1110, HL-L2300D and DCP-7030/7055. Gutenprint cannot drive these printers, and Brother's own Linux driver is an i386/glibc binary that does not run on Alpine. |
+> | **Add-on name** | Shown as **CUPS Print Server (brlaser)** so it can be told apart from the upstream add-on in the Home Assistant store. |
+> | **Repository metadata** | `repository.json` and the add-on `url` point to this fork. The upstream code-signing (`codenotary`) entry is removed, as it does not apply to this fork. |
+> | **Version** | 1.3.5 (upstream 1.3.4 + the changes above). See [CHANGELOG.md](CHANGELOG.md). |
+>
+> **Switching from the upstream add-on:** uninstall the upstream *CUPS Print
+> Server* first (both use port 631). Your printers and settings are kept,
+> because they live in `/share/cups`. After installing this fork, open the
+> printer in the CUPS web UI, choose **Modify Printer** and select the driver
+> **Brother <model>, using Owl-Maintain/brlaser v6.2.8**.
 
 ## Features
 
@@ -14,6 +35,7 @@ This Home Assistant app provides a CUPS (Common Unix Printing System) print serv
 - **Web Interface**: Access the CUPS administration panel at `http://<your-ha-ip>:631` to add and manage printers
 - **Secure Administration**: Configurable authentication for the CUPS admin interface
 - **Printer Support**: Compatible with a wide range of network and USB printers
+- **Brother GDI lasers**: Bundled brlaser driver for Brother host-based lasers (HL-2130 and similar)
 - **Lightweight**: Built on Alpine Linux for minimal resource usage
 - **Data Persistence**: Printer settings and configurations persist across restarts and updates
 
@@ -24,8 +46,8 @@ This Home Assistant app provides a CUPS (Common Unix Printing System) print serv
 1. Navigate to your Home Assistant instance.
 2. Go to **Settings** → **Apps** → **Install App**.
 3. Click the 3-dot menu in the top right corner and select **Repositories**.
-4. Add `https://github.com/arest/cups-addon` as a repository.
-5. Find the "CUPS Print Server" app in the store and click it.
+4. Add `https://github.com/valveo/cups-addon` as a repository.
+5. Find the "CUPS Print Server (brlaser)" app in the store and click it.
 6. Click **Install**.
 
 ### Manual Installation
@@ -34,7 +56,7 @@ If you prefer to manually install:
 
 1. Clone this repository to your local machine:
    ```bash
-   git clone https://github.com/arest/cups-addon.git
+   git clone https://github.com/valveo/cups-addon.git
    ```
 
 2. Copy the repository to your Home Assistant add-ons directory:
@@ -208,7 +230,9 @@ This project is licensed under the MIT License.
 
 ## Credits
 
-- Built by [Andrea Restello](https://github.com/arest)
+- Built by [Andrea Restello](https://github.com/arest) (upstream add-on)
+- brlaser support in this fork by [Matti Mieskonen](https://github.com/valveo)
+- Brother driver: [brlaser](https://github.com/Owl-Maintain/brlaser) (GPL-2.0)
 - Powered by [Home Assistant](https://www.home-assistant.io/) and [CUPS](https://www.cups.org/)
 
 ## Data Persistence
